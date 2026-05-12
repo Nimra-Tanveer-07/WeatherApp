@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Data</title>
+</head>
+<body>
+    <h1>Weather Data</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="location" placeholder="Enter city/zip/postal code">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if weather_data %}
+        {% if weather_data.error %}
+            <p>{{ weather_data.error }}</p>
+        {% else %}
+            <h2>{{weather_data.location }} - Current Status</h2>
+            <p>{{ weather_data.temperature }} °C</p>
+            <p>{{ weather_data.description }}</p>
+            <img src="https://openweathermap.org/img/wn/{{ weather_data.icon }}@2x.png">
+            <h2> 5-Day Forecast </h2>
+
+            {% for forecast in forecast_data %}
+            
+            <div>
+                <h3> {{ forecast.date }} </h3>
+                <p> {{ forecast.temperature }} </p>
+                <p> {{ forecast.description }} </p>
+                <img src="https://openweathermap.org/img/wn/{{ forecast.icon }}@2x.png">
+            </div>
+            
+            {% endfor %}
+
+        {% endif %}
+    {% endif %}
+</body>
+</html>
