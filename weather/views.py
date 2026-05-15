@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import requests
+import json
 
 # Create your views here.
 API_KEY = "4b972341e30cff2a0ee749abba915d96"
@@ -8,8 +9,10 @@ def home(request):
     weather_data = None 
     forecast_list = []
     current_url = None
+    
 
     if request.method == "POST":
+        
         location = request.POST.get('location', '').strip()
         
         if location:
@@ -24,19 +27,25 @@ def home(request):
 
             current_response = requests.get(current_url)
             forecast_response = requests.get(forecast_url)
+            
 
 
             if current_response.status_code == 200:
                 
                 current_data = current_response.json()
+               
+                
                 forecast_data = forecast_response.json()
-
+                main = current_data['weather'][0]['main'].lower()
+                
+                
                 #show current data
                 weather_data = {
                     'location' : location,
                     'temperature' : current_data['main']['temp'],
                     'description' : current_data['weather'][0]['description'],
-                    'icon' : current_data['weather'][0]['icon']
+                    'icon' : current_data['weather'][0]['icon'],
+                    'main' : main
                 }
 
                 #And Also show forecast data
@@ -49,15 +58,15 @@ def home(request):
                                 'date' : forecast['dt_txt'],
                                 'temperature' : forecast['main']['temp'],
                                 'description' : forecast['weather'][0]['description'],
-                                'icon' : forecast['weather'][0]['icon'],
-
+                                'icon' : forecast['weather'][0]['icon']
                             }
                         )
             else : 
                 weather_data = {
                 'error' : "Location Not Found"
                 }
-        
+     
+       
         
         
     context = {

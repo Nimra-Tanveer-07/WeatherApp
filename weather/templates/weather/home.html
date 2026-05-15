@@ -19,17 +19,20 @@
 
 <body class="min-h-screen bg-cover bg-center flex items-center justify-center" 
     
-    {% if weather_data.temperature >= 35 %}
+    {% if 'clear' in weather_data.description and weather_data.temperature >= 28 %}
     style="background-image: url('{% static 'images/sunny.gif' %}');"
 
-    {% elif weather_data.temperature >= 20 %}
-    style="background-image: url('{% static 'images/sunny.gif' %}');"
+    {% elif 'clear' in weather_data.description%}
+    style="background-image: url('{% static 'images/sunnyCloudy.gif' %}');"
 
-    {% elif weather_data.temperature >= 10 %}
+    {% elif 'rain' in weather_data.description %}
     style="background-image: url('{% static 'images/Rainy.gif' %}');"
 
+    {% elif 'storm' in weather_data.description %}
+    style="background-image: url('{% static 'images/thunder.gif' %}');"
+
     {% else %}
-    style="background-image: url('{% static 'images/thunder..gif' %}');"
+    style="background-image: url('{% static 'images/bg.png' %}');"
 
     {% endif %}
 
@@ -86,7 +89,7 @@
                 <div class="elite-glass rounded-2xl p-3 flex flex-col items-center gap-2">
                     <img src="{% static 'images/sunnyCloudyIcon.png' %}" alt="SunnyCloudy"
                         class="elite-glass w-32 h-32 rounded-full object-contain">
-                    <h3 class="text-blue-900 font-semibold">Sunny & Cloudy</h3>
+                    <h3 class="text-blue-900 font-semibold">Partly Cloudy</h3>
                 </div>
 
                 <div class="elite-glass rounded-2xl p-4 flex flex-col items-center gap-2">
@@ -137,49 +140,7 @@
             class="elite-glass rounded-3xl p-4 shadow-2xl flex flex-col md:flex-row items-center justify-between m-8 p-8">
 
             <div class="flex flex-row gap-6">
-                {% if weather_data.temperature >= 35 %}
-
-                <img src="{% static 'images/sunnyIcon.png' %}" alt="Sunny"
-                    class="elite-glass w-32 h-32 rounded-full object-contain">
-                <div class="flex flex-col justify justify-left">
-                    <div class="text-8xl text-black">
-                        {{ weather_data.temperature|floatformat:0 }}°
-                    </div>
-
-                    <div class="text-lg italic text-blue-800"> Sunny </div>
-
-                </div>
-
-                {% elif weather_data.temperature >= 30 %}
-
-                <img src="{% static 'images/sunnyCloudyIcon.png' %}" alt="Sunny and Cloudy"
-                    class="elite-glass  w-32 h-32 rounded-full object-contain">
-                <div class="flex flex-col justify justify-left">
-                    <div class="text-8xl text-black">
-                        {{ weather_data.temperature|floatformat:0 }}°
-                    </div>
-
-                    <div class="text-lg italic text-blue-800"> Partly Cloudy </div>
-
-                </div>
-
-                </p>
-
-                {% elif weather_data.temperature >= 20 %}
-
-                <img src="{% static 'images/cloudyIcon.png' %}" alt="Cloudy"
-                    class="elite-glass w-32 h-32 rounded-full object-contain">
-                <div class="flex flex-col justify justify-left">
-                    <div class="text-8xl text-black">
-                        {{ weather_data.temperature|floatformat:0 }}°
-                    </div>
-
-                    <div class="text-lg italic text-blue-800"> Cloudy </div>
-
-                </div>
-
-
-                {% elif weather_data.temperature >= 10 %}
+                {% if 'rain' in weather_data.description %}
 
                 <img src="{% static 'images/rainyIcon.png' %}" alt="Rainy"
                     class="elite-glass w-32 h-32  rounded-full object-contain">
@@ -188,10 +149,10 @@
                         {{ weather_data.temperature|floatformat:0 }}°
                     </div>
 
-                    <div class="text-lg italic text-blue-800"> Rainy </div>
+                    <div class="text-lg italic text-blue-800"> {{weather_data.main}} </div>
 
                 </div>
-                {% elif weather_data.temperature >= 4 %}
+                {% elif 'storm' in weather_data.description %}
 
                 <img src="{% static 'images/thunderIcon.png' %}" alt="Storm"
                     class="elite-glass w-32 h-32 rounded-full object-contain">
@@ -200,9 +161,53 @@
                         {{ weather_data.temperature|floatformat:0 }}°
                     </div>
 
-                    <div class="text-lg italic text-blue-800"> Thunder Storm </div>
+                    <div class="text-lg italic text-blue-800"> {{weather_data.main}}</div>
 
                 </div>
+                {% elif 'clear' in weather_data.description %}
+
+                <img src="{% static 'images/sunnyIcon.png' %}" alt="Sunny"
+                    class="elite-glass w-32 h-32 rounded-full object-contain">
+                <div class="flex flex-col justify justify-left">
+                    <div class="text-8xl text-black">
+                        {{ weather_data.temperature|floatformat:0 }}°
+                    </div>
+
+                    <div class="text-lg italic text-blue-800">{{weather_data.main}}</div>
+
+                </div>
+
+                {% elif 'clouds' in weather_data.description %}
+
+
+                <img src="{% static 'images/sunnyCloudyIcon.png' %}" alt="Partly Cloudy"
+                    class="elite-glass  w-32 h-32 rounded-full object-contain">
+                <div class="flex flex-col justify justify-left">
+                    <div class="text-8xl text-black">
+                        {{ weather_data.temperature|floatformat:0 }}°
+                    </div>
+
+                    <div class="text-lg italic text-blue-800"> {{weather_data.main}} </div>
+
+                </div>
+
+                </p>
+
+                {% elif 'cloud' in weather_data.description %}
+
+                <img src="{% static 'images/cloudyIcon.png' %}" alt="Cloudy"
+                    class="elite-glass w-32 h-32 rounded-full object-contain">
+                <div class="flex flex-col justify justify-left">
+                    <div class="text-8xl text-black">
+                        {{ weather_data.temperature|floatformat:0 }}°
+                    </div>
+
+                    <div class="text-lg italic text-blue-800">{{weather_data.main}}</div>
+
+                </div>
+
+
+                
                 {% endif %}
 
 
