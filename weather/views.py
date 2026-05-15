@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import requests
+from datetime import datetime
 import json
 
 # Create your views here.
@@ -45,7 +46,10 @@ def home(request):
                     'temperature' : current_data['main']['temp'],
                     'description' : current_data['weather'][0]['description'],
                     'icon' : current_data['weather'][0]['icon'],
-                    'main' : main
+                    'main' : main,
+                    'humidity': current_data['main']['humidity'],
+                    'pressure': current_data['main']['pressure'],
+                    'wind_speed': current_data['wind']['speed']
                 }
 
                 #And Also show forecast data
