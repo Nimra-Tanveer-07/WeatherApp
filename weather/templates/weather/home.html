@@ -386,7 +386,49 @@
         {% endif %}
 
     </div>
+   <!-- FLOATING BOT BUTTON -->
+<div onclick="toggleChat()"
+     class="fixed bottom-6 right-6 text-4xl bg-transparent flex items-center justify-center rounded-full cursor-pointer transition">
+    <img src="{% static 'images/robot.png' %}" alt="Chat Icon" class="w-24 h-24 object-contain">  
+</div>
+
+<!-- CHAT WINDOW -->
+<div id="chatBox"
+     class="hidden elite-glass fixed bottom-24 right-6 w-80 h-[350px] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden">
+
+    <!-- HEADER -->
+    <div class="bg-sky-600 text-white p-4 flex justify-between items-center">
+        <span class="font-semibold">Weather AI Assistant</span>
+        <span onclick="toggleChat()" class="cursor-pointer text-xl">
+            <i class="fa-solid fa-xmark"></i>
+        </span>
+    </div>
+
+    <!-- MESSAGES -->
+    <div id="chatMessages" class="flex-1 p-3 overflow-y-auto space-y-2 bg-gray-50">
+
+        <div class="bg-gray-200 text-sm p-2 rounded-full rounded-tl-none w-fit">
+            Hey there! How can I help you with weather today?
+        </div>
+
+    </div>
+
+    <!-- INPUT -->
+    <div class="p-3 border-t flex gap-2 bg-white">
+        <input id="userInput"
+               type="text"
+               placeholder="Type message..."
+               class="elite-glass flex-1 border rounded-full px-3 py-1 focus:outline-none focus:ring-2 focus:ring-sky-600">
+
+        <button onclick="sendMessage()"
+                class="bg-sky-600 text-white px-4 py-2 rounded-full hover:bg-sky-800 hover:font-bold cursor-pointer">
+            Send
+        </button>
+    </div>
+
+</div>
 
 </body>
+<script src="{% static 'js/script.js' %}"></script>
 
 </html>
